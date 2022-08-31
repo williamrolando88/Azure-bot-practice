@@ -2,14 +2,8 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "groupName": {
-      "value": ""
-    },
-    "groupLocation": {
-      "value": ""
-    },
     "azureBotId": {
-      "value": ""
+      "value": "IDE-bot-deployment"
     },
     "azureBotSku": {
       "value": "S1"
@@ -18,13 +12,13 @@
       "value": "global"
     },
     "botEndpoint": {
-      "value": ""
+      "value": "https://ide-deploy-testing.azurewebsites.net/api/messages"
     },
     "appType": {
       "value": "MultiTenant"
     },
     "appId": {
-      "value": ""
+      "value": "b4904dc5-7042-4560-bfcf-a15a46e76a1c"
     },
     "UMSIName": {
       "value": ""

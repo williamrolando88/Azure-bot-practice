@@ -2,22 +2,22 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "groupName": {
-      "value": ""
-    },
-    "groupLocation": {
-      "value": ""
-    },
     "appServiceName": {
+      "value": "IDE-deploy-testing"
+    },
+    "existingAppServicePlanName": {
+      "value": "bot-testing-app-service-plan"
+    },
+    "existingAppServicePlanLocation": {
+      "value": "brazilsouth"
+    },
+    "newAppServicePlanName": {
       "value": ""
     },
-    "appServicePlanName": {
+    "newAppServicePlanLocation": {
       "value": ""
     },
-    "appServicePlanLocation": {
-      "value": ""
-    },
-    "appServicePlanSku": {
+    "newAppServicePlanSku": {
       "value": {
         "name": "S1",
         "tier": "Standard",
@@ -30,10 +30,10 @@
       "value": "MultiTenant"
     },
     "appId": {
-      "value": ""
+      "value": "b4904dc5-7042-4560-bfcf-a15a46e76a1c"
     },
     "appSecret": {
-      "value": ""
+      "value": "b9718da2-3487-4208-a707-7eb06ff6173f"
     },
     "UMSIName": {
       "value": ""
