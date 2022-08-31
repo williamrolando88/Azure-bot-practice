@@ -8,24 +8,24 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
 - [Node.js](https://nodejs.org) version 10.14.1 or higher
 
-    ```bash
-    # determine node version
-    node --version
-    ```
+  ```bash
+  # determine node version
+  node --version
+  ```
 
 ## To run the bot
 
 - Install modules
 
-    ```bash
-    npm install
-    ```
+  ```bash
+  npm install
+  ```
 
 - Start the bot
 
-    ```bash
-    npm start
-    ```
+  ```bash
+  npm start
+  ```
 
 ## Testing the bot using Bot Framework Emulator
 
@@ -43,7 +43,6 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
 To learn more about deploying a bot to Azure, see [Deploy your bot to Azure](https://aka.ms/azuredeployment) for a complete list of deployment instructions.
 
-
 ## Further reading
 
 - [Bot Framework Documentation](https://docs.botframework.com)
@@ -59,3 +58,18 @@ To learn more about deploying a bot to Azure, see [Deploy your bot to Azure](htt
 - [Channels and Bot Connector Service](https://docs.microsoft.com/en-us/azure/bot-service/bot-concepts?view=azure-bot-service-4.0)
 - [Restify](https://www.npmjs.com/package/restify)
 - [dotenv](https://www.npmjs.com/package/dotenv)
+
+Don't loose this info
+
+{
+"appId": "b4904dc5-7042-4560-bfcf-a15a46e76a1c",
+"password": "Fdl8Q~.OVEw5M~3IyPcoq9twMKBERugdDWtBoaam",
+"tenant": "b9718da2-3487-4208-a707-7eb06ff6173f"
+}
+
+appSecret: "b9718da2-3487-4208-a707-7eb06ff6173f"
+
+Personal notes:
+
+- Create a service plan or use an existing one
+- Always look the directory name before starting doing something especially with ARM templates
