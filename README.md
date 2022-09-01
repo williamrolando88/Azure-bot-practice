@@ -1,8 +1,12 @@
 # Azure chatbots
 
+## How to create a basic bot for practice purposes
+
+#### Please follow the official documentacion [here](https://docs.microsoft.com/en-us/composer/quickstart-create-bot)
+
 ## How to provision resources for a multitenant chatbot
 
-1. Login to Azure:
+#### 1. Login to Azure:
 
    ```
    az login
@@ -13,7 +17,7 @@
    - `tenantId`
    - `id`
 
-2. To select a subscription, run:
+#### 2. To select a subscription, run:
 
    Replace:
 
@@ -23,7 +27,7 @@
    az account set --subscription "<subscription>"
    ```
 
-3. If you don't already have an appropriate resource group, run:
+#### 3. If you don't already have an appropriate resource group, run:
 
    Replace:
 
@@ -39,7 +43,7 @@
    - `name`
    - `region`
 
-4. Create a new identity resource
+#### 4. Create a new identity resource
 
    Replace:
 
@@ -54,7 +58,7 @@
    - `appId`
    - `name`
 
-5. Reset AppPassword
+#### 5. Reset AppPassword
 
    Replace:
 
@@ -70,7 +74,7 @@
 
    > It's really important to store this value because you're not going to be able to see it again
 
-6. Create a Web App and App Service Plan resources
+#### 6. Create a Web App and App Service Plan resources
 
    Considerations:
 
@@ -102,7 +106,7 @@
 
    - `appServiceName`
 
-7. Create an Azure Bot resource
+#### 7. Create an Azure Bot resource
 
    Considerations:
 
@@ -131,9 +135,7 @@
 
    - `azureBotId`
 
-<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-
-8. Reset AppPassword
+#### 8. Reset AppPassword
 
    Finally, you need to create the following deploying template to use in composer
    Replace:
@@ -194,13 +196,13 @@
     "tenantId": "b9718da2-3487-4208-a707-7eb06ff6173f", // Azure Active Directory -> Properties -> Tenant ID
     "hostname": "wr88-ComposerTest", // App Service -> Overview
     "runtimeIdentifier": "win-x64", // Default value
-    "resourceGroup": "Bot-deployment-group", // Resource group -> Name (as it is)
-    "botName": "wr88-ComposerTest", // Don't know what it does
+    "resourceGroup": "Bot-deployment-group", // Resource group -> Name (as is)
+    "botName": "wr88-ComposerTest", // Azure Bot -> name (as is)
     "subscriptionId": "16799aee-6093-4464-b21a-230d6fa58125", // Subscriptions
     "region": "eastus", // Resource group -> Overview -> Location
     "appServiceOperatingSystem": "windows", // Required for C# bots
     "scmHostDomain": "", // Leave it as is
-    "luisResource": "<name of your luis resource>", // [Optional] (Language understanding resource) -> Name
+    "luisResource": "<name of your luis resource>", // [Optional] (Language understanding resource) -> Name (as is)
     "settings": {
     "applicationInsights": {
       "InstrumentationKey": "<Instrumentation Key>",
@@ -228,15 +230,26 @@
       "endpoint": "<endpoint>"
     },
     "MicrosoftAppId": "faf2a831-b4d5-41be-af8a-33ee069a02a1", // Azure Active Directory -> App registration -> 'Select your app from the list' -> Overview
-    "MicrosoftAppPassword": "wtp8Q~xBRXqNl0dt40Ekf~iLCg-5vo1YWJnsDaMh" // If you forget your password, with 'MicrosoftAppId' run the command in step 5
+    "MicrosoftAppPassword": "wtp8Q~xBRXqNl0dt40Ekf~iLCg-5vo1YWJnsDaMh" // If you forget your password, with 'MicrosoftAppId' as 'appId' run the command in step 5
     }
     }
 
    ```
 
-9. Deploy from Bot Framework Composer
+#### 9. Deploy from Bot Framework Composer
 
    - In Publish -> Publishin Profile -> Add New, give a name for the publishing profile and select Azure as target, then continue.
    - Select "Import existing resources" and paste the template you created in the last step, then continue.
-   - Confirm data
-   - Publish your bot
+   
+   > For a more detailed explanation you can take a look at the official documentation [here](https://docs.microsoft.com/en-us/composer/how-to-publish-bot?tabs=v2x#import-existing-azure-resources)
+   
+## Publish your bot in Azure Cloud
+
+#### To wrap things up, you can follow [this](https://docs.microsoft.com/en-us/composer/how-to-publish-bot?tabs=v2x#publish-your-bot) section of the official documentation
+
+## Deployment on Web Page
+
+#### To have a fully working chatbot embedded in a web page you can follow [these](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-channel-connect-webchat?view=azure-bot-service-4.0) instructions
+> Put special attention to the security considerations about why is better to use [option 1](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-channel-connect-webchat?view=azure-bot-service-4.0#option-1---exchange-your-secret-for-a-token-and-generate-the-embed) instead of [option 2](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-channel-connect-webchat?view=azure-bot-service-4.0#option-2---embed-the-web-chat-control-in-your-website-using-the-secret)
+
+## 🎉🎉 Congratulations 🎉🎉, now you have a fully working chatbot embedded in your webpage
