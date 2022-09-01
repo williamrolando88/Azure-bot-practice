@@ -1,12 +1,12 @@
-# Azure chatbots
+# Azure chatbots - Complete how-to implement a working multitenant chat bot in a Web Page
 
-## How to create a basic bot for practice purposes
+## Create a local chatbot
 
 #### To start learning about the development of an Azure chatbot I recommend following [these](https://docs.microsoft.com/en-us/composer/quickstart-create-bot) instructions
 
 The best option to start is a C# empty bot as the tutorial suggests
 
-## How to provision resources for a multitenant chatbot
+## Provision resources for a chatbot in Azure cloud
 
 #### 1. Login to Azure:
 
