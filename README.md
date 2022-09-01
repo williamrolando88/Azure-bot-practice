@@ -1,4 +1,4 @@
-# Azure chatbots - Complete how-to implement a working multitenant chat bot in a Web Page
+# Azure chatbots - Complete guide to implement a working multitenant chat bot in a Web Page
 
 ## Create a local chatbot
 
