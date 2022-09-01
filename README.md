@@ -2,7 +2,9 @@
 
 ## How to create a basic bot for practice purposes
 
-#### Please follow the official documentacion [here](https://docs.microsoft.com/en-us/composer/quickstart-create-bot)
+#### To start learning about the development of an Azure chatbot I recommend following [these](https://docs.microsoft.com/en-us/composer/quickstart-create-bot) instructions
+
+The best option to start is a C# empty bot as the tutorial suggests
 
 ## How to provision resources for a multitenant chatbot
 
