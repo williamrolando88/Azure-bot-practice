@@ -1,0 +1,18 @@
+{
+  "name": "This is a registry app",
+  "environment": "composer",
+  "tenantId": "b9718da2-3487-4208-a707-7eb06ff6173f",
+  "hostname": "wr88-bot-deploy",
+  "runtimeIdentifier": "win-x64",
+  "resourceGroup": "here-we-go-again",
+  "botName": "last-bot-test",
+  "subscriptionId": "16799aee-6093-4464-b21a-230d6fa58125",
+  "region": "eastus",
+  "appServiceOperatingSystem": "windows",
+  "scmHostDomain": "",
+  "luisResource": "<name of your luis resource>",
+  "settings": {
+    "MicrosoftAppId": "fdac71da-3a23-42f8-94b0-7cebbf27e869",
+    "MicrosoftAppPassword": "Alr8Q~zUO.ioeo8Lyz_yLH1IYV.BcNxr2F3Bsc7p"
+  }
+}

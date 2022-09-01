@@ -3,19 +3,19 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "appServiceName": {
-      "value": "IDE-deploy-testing"
+      "value": "wr88-bot-deploy"
     },
     "existingAppServicePlanName": {
-      "value": "bot-testing-app-service-plan"
+      "value": ""
     },
     "existingAppServicePlanLocation": {
-      "value": "brazilsouth"
+      "value": ""
     },
     "newAppServicePlanName": {
-      "value": ""
+      "value": "wr88-new-service-plan"
     },
     "newAppServicePlanLocation": {
-      "value": ""
+      "value": "eastus"
     },
     "newAppServicePlanSku": {
       "value": {
@@ -30,10 +30,10 @@
       "value": "MultiTenant"
     },
     "appId": {
-      "value": "b4904dc5-7042-4560-bfcf-a15a46e76a1c"
+      "value": "fdac71da-3a23-42f8-94b0-7cebbf27e869"
     },
     "appSecret": {
-      "value": "b9718da2-3487-4208-a707-7eb06ff6173f"
+      "value": "Alr8Q~zUO.ioeo8Lyz_yLH1IYV.BcNxr2F3Bsc7p"
     },
     "UMSIName": {
       "value": ""

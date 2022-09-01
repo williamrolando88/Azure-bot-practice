@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "azureBotId": {
-      "value": "IDE-bot-deployment"
+      "value": "last-bot-test"
     },
     "azureBotSku": {
       "value": "S1"
@@ -18,7 +18,7 @@
       "value": "MultiTenant"
     },
     "appId": {
-      "value": "b4904dc5-7042-4560-bfcf-a15a46e76a1c"
+      "value": "fdac71da-3a23-42f8-94b0-7cebbf27e869"
     },
     "UMSIName": {
       "value": ""

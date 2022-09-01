@@ -1,75 +1,242 @@
-# my-chat-bot
+# Azure chatbots
 
-Demonstrate the core capabilities of the Microsoft Bot Framework
+## How to provision resources for a multitenant chatbot
 
-This bot has been created using [Bot Framework](https://dev.botframework.com), it shows how to create a simple bot that accepts input from the user and echoes it back.
+1. Login to Azure:
 
-## Prerequisites
+   ```
+   az login
+   ```
 
-- [Node.js](https://nodejs.org) version 10.14.1 or higher
+   Save the following values:
 
-  ```bash
-  # determine node version
-  node --version
-  ```
+   - `tenantId`
+   - `id`
 
-## To run the bot
+2. To select a subscription, run:
 
-- Install modules
+   Replace:
 
-  ```bash
-  npm install
-  ```
+   - < subscription >: `name` or `id` from step 1
 
-- Start the bot
+   ```
+   az account set --subscription "<subscription>"
+   ```
 
-  ```bash
-  npm start
-  ```
+3. If you don't already have an appropriate resource group, run:
 
-## Testing the bot using Bot Framework Emulator
+   Replace:
 
-[Bot Framework Emulator](https://github.com/microsoft/botframework-emulator) is a desktop application that allows bot developers to test and debug their bots on localhost or running remotely through a tunnel.
+   - < group >: Choose a new name for your group
+   - < region >: Choose a region having in consideration [this info](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-reference-regions) when using LUIS and the [failover](https://docs.microsoft.com/en-us/azure/availability-zones/cross-region-replication-azure) region also
 
-- Install the Bot Framework Emulator version 4.9.0 or greater from [here](https://github.com/Microsoft/BotFramework-Emulator/releases)
+   ```
+   az group create --name "<group>" --location "<region>"
+   ```
 
-### Connect to the bot using Bot Framework Emulator
+   Save the following values:
 
-- Launch Bot Framework Emulator
-- File -> Open Bot
-- Enter a Bot URL of `http://localhost:3978/api/messages`
+   - `name`
+   - `region`
 
-## Deploy the bot to Azure
+4. Create a new identity resource
 
-To learn more about deploying a bot to Azure, see [Deploy your bot to Azure](https://aka.ms/azuredeployment) for a complete list of deployment instructions.
+   Replace:
 
-## Further reading
+   - < app-registration-display-name >: Choose a new name for your identity resource
 
-- [Bot Framework Documentation](https://docs.botframework.com)
-- [Bot Basics](https://docs.microsoft.com/azure/bot-service/bot-builder-basics?view=azure-bot-service-4.0)
-- [Dialogs](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-concept-dialog?view=azure-bot-service-4.0)
-- [Gathering Input Using Prompts](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-prompts?view=azure-bot-service-4.0)
-- [Activity processing](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-concept-activity-processing?view=azure-bot-service-4.0)
-- [Azure Bot Service Introduction](https://docs.microsoft.com/azure/bot-service/bot-service-overview-introduction?view=azure-bot-service-4.0)
-- [Azure Bot Service Documentation](https://docs.microsoft.com/azure/bot-service/?view=azure-bot-service-4.0)
-- [Azure CLI](https://docs.microsoft.com/cli/azure/?view=azure-cli-latest)
-- [Azure Portal](https://portal.azure.com)
-- [Language Understanding using LUIS](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/)
-- [Channels and Bot Connector Service](https://docs.microsoft.com/en-us/azure/bot-service/bot-concepts?view=azure-bot-service-4.0)
-- [Restify](https://www.npmjs.com/package/restify)
-- [dotenv](https://www.npmjs.com/package/dotenv)
+   ```
+   az ad app create --display-name "<app-registration-display-name>" --sign-in-audience "AzureADandPersonalMicrosoftAccount"
+   ```
 
-Don't loose this info
+   Save the following values:
 
-{
-"appId": "b4904dc5-7042-4560-bfcf-a15a46e76a1c",
-"password": "Fdl8Q~.OVEw5M~3IyPcoq9twMKBERugdDWtBoaam",
-"tenant": "b9718da2-3487-4208-a707-7eb06ff6173f"
-}
+   - `appId`
+   - `name`
 
-appSecret: "b9718da2-3487-4208-a707-7eb06ff6173f"
+5. Reset AppPassword
 
-Personal notes:
+   Replace:
 
-- Create a service plan or use an existing one
-- Always look the directory name before starting doing something especially with ARM templates
+   - < appId >: `appId` from step 4
+
+   ```
+   az ad app credential reset --id "<appId>"
+   ```
+
+   Save the following values:
+
+   - `password`
+
+   > It's really important to store this value because you're not going to be able to see it again
+
+6. Create a Web App and App Service Plan resources
+
+   Considerations:
+
+   - At this point you still don't have an App Service Plan
+   - For the command to be executed you must be in the root folder of this repository (where this README.md is located)
+
+   For this step use the following template and parameters file:
+
+   - Template: ./ARMTemplates/template-WebApp.json
+   - Parameters: ./ARMTemplates/parameters-WebApp.json
+
+   In "parameter-WebApp.json" replace:
+
+   - < appServiceName >: A unique name for your WebApp
+   - < newAppServicePlanName >: A unique name for your App Service Plan
+   - < newAppServicePlanLocation >: `region` from step 3
+   - < appId >: `appId` from step 4
+   - < appSecret >: `password` from step 5
+
+   Replace:
+
+   - < resource-group >: `name` from step 3
+
+   ```
+   az deployment group create –-resource-group <resource-group> --template-file ./ARMTemplates/template-WebApp.json --parameters @./ARMTemplates/parameters-WebApp.json
+   ```
+
+   Save the following values:
+
+   - `appServiceName`
+
+7. Create an Azure Bot resource
+
+   Considerations:
+
+   - For the command to be executed you must be in the root folder of this repository (where this README.md is located)
+
+   For this step use the following template and parameters file:
+
+   - Template: ./ARMTemplates/template-AzureBot.json
+   - Parameters: ./ARMTemplates/parameters-AzureBot.json
+
+   In "parameter-AzureBot.json" replace:
+
+   - < azureBotId >: A unique name for your AzureBot
+   - < botEndpoint >: You have to replace `appServiceName` in the following string and use it: "https://<appServiceName>.azurewebsites.net/api/messages"
+   - < appId >: `appId` from step 4
+
+   Replace:
+
+   - < resource-group >: `name` from step 3
+
+   ```
+   az deployment group create --resource-group <resource-group> --template-file ./ARMTemplates/template-AzureBot.json --parameters @./ARMTemplates/parameters-AzureBot.json
+   ```
+
+   Save the following values:
+
+   - `azureBotId`
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
+8. Reset AppPassword
+
+   Finally, you need to create the following deploying template to use in composer
+   Replace:
+
+   - < appId >: `appId` from step 4
+
+   ```json
+   // Fill up this template with the info you got during the provisioning process
+
+   {
+     "name": "<This is a registry app>",
+     "environment": "composer",
+     "tenantId": "<tenant id of your azure account>",
+     "hostname": "<web application host name>",
+     "runtimeIdentifier": "win-x64",
+     "resourceGroup": "<name of your resource group>",
+     "botName": "<name of your bot channel registration>",
+     "subscriptionId": "<id of your subscription>",
+     "region": "<region of your resource group>",
+     "appServiceOperatingSystem": "windows",
+     "scmHostDomain": "",
+     "luisResource": "<name of your luis resource>",
+     "settings": {
+       "applicationInsights": {
+         "InstrumentationKey": "<Instrumentation Key>",
+         "connectionString": "<connection string>"
+       },
+       "cosmosDb": {
+         "cosmosDBEndpoint": "<endpoint url>",
+         "authKey": "<auth key>",
+         "databaseId": "botstate-db",
+         "containerId": "botstate-container"
+       },
+       "blobStorage": {
+         "connectionString": "<connection string>",
+         "container": "<container>"
+       },
+       "luis": {
+         "authoringKey": "",
+         "authoringEndpoint": "",
+         "endpointKey": "",
+         "endpoint": "",
+         "region": "westus"
+       },
+       "qna": {
+         "subscriptionKey": "<subscription key>",
+         "endpoint": "<endpoint>"
+       },
+       "MicrosoftAppId": "<app id from Bot Framework registration>",
+       "MicrosoftAppPassword": "<app password from Bot Framework registration>"
+     }
+   }
+
+    // This is an example of a filled template and the places where u can find the values to fill the blanks
+    {
+    "name": "wr88-ComposerTest", // Don't know what it does
+    "environment": "composer", // "composer" when using Bot Framework Composer
+    "tenantId": "b9718da2-3487-4208-a707-7eb06ff6173f", // Azure Active Directory -> Properties -> Tenant ID
+    "hostname": "wr88-ComposerTest", // App Service -> Overview
+    "runtimeIdentifier": "win-x64", // Default value
+    "resourceGroup": "Bot-deployment-group", // Resource group -> Name (as it is)
+    "botName": "wr88-ComposerTest", // Don't know what it does
+    "subscriptionId": "16799aee-6093-4464-b21a-230d6fa58125", // Subscriptions
+    "region": "eastus", // Resource group -> Overview -> Location
+    "appServiceOperatingSystem": "windows", // Required for C# bots
+    "scmHostDomain": "", // Leave it as is
+    "luisResource": "<name of your luis resource>", // [Optional] (Language understanding resource) -> Name
+    "settings": {
+    "applicationInsights": {
+      "InstrumentationKey": "<Instrumentation Key>",
+      "connectionString": "<connection string>"
+    },
+    "cosmosDb": {
+      "cosmosDBEndpoint": "<endpoint url>",
+      "authKey": "<auth key>",
+      "databaseId": "botstate-db",
+      "containerId": "botstate-container"
+    },
+    "blobStorage": {
+      "connectionString": "<connection string>",
+      "container": "<container>"
+    },
+    "luis": {
+      "authoringKey": "", // LUIS resource authoring -> Key and Endpoint -> KEY 1
+      "authoringEndpoint": "", // LUIS resource authoring -> Overview | Key and Endpoint -> Endpoint
+      "endpointKey": "", // LUIS resource -> Key and Endpoint -> KEY 1
+      "endpoint": "", // LUIS resource -> Overview | Key and Endpoint -> Endpoint
+      "region": "westus" // LUIS resource authoring -> Overview -> Location
+    },
+    "qna": {
+      "subscriptionKey": "<subscription key>",
+      "endpoint": "<endpoint>"
+    },
+    "MicrosoftAppId": "faf2a831-b4d5-41be-af8a-33ee069a02a1", // Azure Active Directory -> App registration -> 'Select your app from the list' -> Overview
+    "MicrosoftAppPassword": "wtp8Q~xBRXqNl0dt40Ekf~iLCg-5vo1YWJnsDaMh" // If you forget your password, with 'MicrosoftAppId' run the command in step 5
+    }
+    }
+
+   ```
+
+9. Deploy from Bot Framework Composer
+
+   - In Publish -> Publishin Profile -> Add New, give a name for the publishing profile and select Azure as target, then continue.
+   - Select "Import existing resources" and paste the template you created in the last step, then continue.
+   - Confirm data
+   - Publish your bot
